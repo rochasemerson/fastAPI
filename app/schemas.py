@@ -1,3 +1,4 @@
+from enum import IntEnum
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
@@ -34,9 +35,21 @@ class Post(PostBase):
     class Config:
         from_attributes = True
 
+class PostOut(BaseModel):
+    Post: Post
+    votes: int
+
 class Token(BaseModel):
     acess_token: str
     token_type: str
 
 class TokenData(BaseModel):
     id: Optional[int] = None
+
+class VoteEnum(IntEnum):
+    UP = 1
+    DOWN = 0
+
+class Vote(BaseModel):
+    post_id: int
+    dir: VoteEnum
